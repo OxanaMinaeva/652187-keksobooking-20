@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Оксана Минаева](https://up.htmlacademy.ru/javascript/20/user/652187).
-* Наставник: `Неизвестно`.
+* Наставник: [Павел Ившин] (https://htmlacademy.ru/profile/id818775).
 
 ---
 
