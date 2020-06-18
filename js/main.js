@@ -31,7 +31,7 @@ var getAvatarUrl = function () {
 var getRandomUniqueArray = function (elementsArray) {
   var indexElement;
   var randomUniqueArray = [];
-  for (var k = 0; k < getRandomNumber(1, elementsArray.length); k++) {
+  for (var k = 0; k < elementsArray.length; k++) {
     indexElement = getRandomNumber(0, elementsArray.length - 1);
     if (randomUniqueArray.indexOf(elementsArray[indexElement]) === -1) {
       randomUniqueArray.push(elementsArray[indexElement]);
