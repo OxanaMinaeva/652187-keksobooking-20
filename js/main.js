@@ -2,12 +2,26 @@
 var NUMBER_OF_ADS = 8;
 var map = document.querySelector('.map__overlay');
 var mapPinElement = document.querySelector('.map__pin');
+var mapPinMain = document.querySelector('.map__pin--main');
 
 var mapPings = [];
 var types = ['palace', 'flat', 'house', 'bungalo'];
 var times = ['12:00', '13:00', '14:00'];
 var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+
+var elemMap = document.querySelector('.map');
+
+var adForm = document.querySelector('.ad-form');
+var adFormHeader = adForm.querySelector('.ad-form-header');
+var adFormElements = adForm.querySelectorAll('.ad-form__element');
+
+var mapFilters = document.querySelector('.map__filters');
+
+var adFormSubmit = document.querySelector('.ad-form__submit');
+
+var roomsSelect = document.querySelector('.ad-form__element select[name=rooms]');
+var capacitySelect = document.querySelector('.ad-form__element select[name=capacity]');
 
 
 var getRandomNumber = function (min, max) {
@@ -89,9 +103,6 @@ var getMapPings = function () {
 
 
 var renderMapPin = function () {
-  var elemMap = document.querySelector('.map');
-  elemMap.classList.remove('map--faded');
-
   var mapPinsElement = document.querySelector('.map__pins');
   var fragment = document.createDocumentFragment();
   var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -111,5 +122,97 @@ var renderMapPin = function () {
   return mapPinsElement;
 };
 
-renderMapPin();
 
+var mapPinMainLeft = Number(mapPinMain.style.left.replace(/px/, ''));
+var mapPinMainTop = Number(mapPinMain.style.top.replace(/px/, ''));
+var mapPinMainWidth = Number(mapPinMain.firstElementChild.width);
+var mapPinMainHeight = Number(mapPinMain.firstElementChild.height);
+var mapPinMainHeightAfter = Number(getComputedStyle(mapPinMain, '::after').height.replace(/px/, ''));
+
+var pinMainCoordinateCenterLeft = Math.round(mapPinMainLeft + mapPinMainWidth / 2);
+var pinMainCoordinateCenterTop = Math.round(mapPinMainTop + (mapPinMainHeightAfter + mapPinMainHeight) / 2);
+var pinMainCoordinateSpearheadTop = Math.round(mapPinMainTop + mapPinMainHeight + mapPinMainHeightAfter);
+
+
+var addressInactiveMap = (pinMainCoordinateCenterLeft + ', ' + pinMainCoordinateCenterTop);
+var addressActiveMap = (pinMainCoordinateCenterLeft + ', ' + pinMainCoordinateSpearheadTop);
+
+var setAddress = function (state) {
+  var addressInput = document.querySelector('.ad-form__element input[name=address]');
+  if (state === 'inactive') {
+    addressInput.value = addressInactiveMap;
+  } else {
+    addressInput.value = addressActiveMap;
+  }
+};
+
+var makeInactiveMapAndForm = function () {
+  for (var i = 0; i < mapFilters.length; i++) {
+    mapFilters[i].setAttribute('disabled', 'true');
+  }
+
+  adFormHeader.setAttribute('disabled', 'true');
+  for (var l = 0; l < adFormElements.length; l++) {
+    adFormElements[l].setAttribute('disabled', 'true');
+  }
+  setAddress('inactive');
+};
+
+
+var makeActiveMapAndForm = function () {
+
+  for (var i = 0; i < mapFilters.length; i++) {
+    mapFilters[i].removeAttribute('disabled');
+  }
+  adFormHeader.removeAttribute('disabled');
+  for (var l = 0; l < adFormElements.length; l++) {
+    adFormElements[l].removeAttribute('disabled');
+  }
+
+  elemMap.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+
+  mapPinMain.removeEventListener('mousedown', onMousedown);
+  mapPinMain.removeEventListener('keydown', onEnterClick);
+};
+
+
+var onMousedown = function (evt) {
+  if (evt.which === 1) {
+    makeActiveMapAndForm();
+    setAddress('active');
+  }
+};
+
+var onEnterClick = function (evt) {
+  if (evt.keyCode === 13) {
+    makeActiveMapAndForm();
+    setAddress('active');
+  }
+};
+
+var capacityValidation = function () {
+  var roomsSelectValue = roomsSelect.value;
+  var capacitySelectValue = capacitySelect.value;
+
+  if (roomsSelectValue !== '100' && (roomsSelectValue < capacitySelectValue || capacitySelectValue === '0')) {
+    capacitySelect.setCustomValidity('Количество гостей должно быть не более ' + roomsSelectValue);
+
+  } else if (roomsSelectValue === '100' && capacitySelectValue !== '0') {
+    capacitySelect.setCustomValidity('Количество мест должно быть "не для гостей"');
+  } else {
+    capacitySelect.setCustomValidity('');
+  }
+
+};
+
+renderMapPin();
+makeInactiveMapAndForm();
+
+
+mapPinMain.addEventListener('mousedown', onMousedown);
+mapPinMain.addEventListener('keydown', onEnterClick);
+
+
+capacitySelect.addEventListener('change', capacityValidation);
+adFormSubmit.addEventListener('click', capacityValidation);
