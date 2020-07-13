@@ -22,4 +22,6 @@
     window.capacityValidation(roomsSelect, capacitySelect);
   });
 
+  window.load();
+
 })();

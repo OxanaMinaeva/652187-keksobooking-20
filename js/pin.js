@@ -3,25 +3,26 @@
 (function () {
 // Самостоятельный модуль
 // Отрисовка объектов меток
-  var pings = window.data();
-  var mapPings = pings.mapPings;
-  var NUMBER_OF_ADS = pings.NUMBER_OF_ADS;
 
+  window.pin = function (mapPings, adsCount) {
 
-  var mapPinsElement = document.querySelector('.map__pins');
-  var fragment = document.createDocumentFragment();
-  var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+    var mapPinsElement = document.querySelector('.map__pins');
+    var fragment = document.createDocumentFragment();
+    var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
-  var mapPin;
-  for (var j = 0; j < NUMBER_OF_ADS; j++) {
-    mapPin = mapPinTemplate.cloneNode(true);
-    mapPin.setAttribute('style', 'left: ' + mapPings[j].location.x + 'px; top: ' + mapPings[j].location.y + 'px;');
-    mapPin.firstChild.src = mapPings[j].author.avatar;
-    mapPin.firstChild.alt = mapPings[j].offer.title;
+    var mapPin;
+    for (var j = 0; j < adsCount; j++) {
+      if (mapPings[j].offer) {
+        mapPin = mapPinTemplate.cloneNode(true);
+        mapPin.setAttribute('style', 'left: ' + mapPings[j].location.x + 'px; top: ' + mapPings[j].location.y + 'px;');
+        mapPin.firstChild.src = mapPings[j].author.avatar;
+        mapPin.firstChild.alt = mapPings[j].offer.title;
 
-    fragment.appendChild(mapPin);
-  }
+        fragment.appendChild(mapPin);
+      }
+    }
 
-  mapPinsElement.appendChild(fragment);
-  return mapPinsElement;
+    mapPinsElement.appendChild(fragment);
+    return mapPinsElement;
+  };
 })();
