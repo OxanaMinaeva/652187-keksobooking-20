@@ -2,6 +2,10 @@
 (function () {
 
   window.pinMove = function () {
+    var Coordinate = {
+      Y_MIN: 130,
+      Y_MAX: 630
+    };
     var mapPinMain = document.querySelector('.map__pin--main');
     var map = document.querySelector('.map');
     var mapOffsetWidth = map.offsetWidth;
@@ -29,11 +33,10 @@
         };
 
         var pinMainCoordinates = window.pinMainCoordinates();
-
-        if (startCoords.y < 130) {
-          mapPinMain.style.top = (130 - pinMainCoordinates.mapPinMainHeightAfter - pinMainCoordinates.mapPinMainHeight) + 'px';
-        } else if (startCoords.y > 630 - pinMainCoordinates.mapPinMainHeightAfter - pinMainCoordinates.mapPinMainHeight) {
-          mapPinMain.style.top = (630 - pinMainCoordinates.mapPinMainHeightAfter - pinMainCoordinates.mapPinMainHeight) + 'px';
+        if (pinMainCoordinates.pinMainCoordinateY < Coordinate.Y_MIN) {
+          mapPinMain.style.top = (Coordinate.Y_MIN - pinMainCoordinates.mapPinMainHeightAfter - pinMainCoordinates.mapPinMainHeight) + 'px';
+        } else if (pinMainCoordinates.pinMainCoordinateY > Coordinate.Y_MAX) {
+          mapPinMain.style.top = (Coordinate.Y_MAX - pinMainCoordinates.mapPinMainHeightAfter - pinMainCoordinates.mapPinMainHeight) + 'px';
         } else {
           mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
         }
