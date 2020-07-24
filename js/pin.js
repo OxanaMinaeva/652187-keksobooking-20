@@ -5,7 +5,6 @@
 // Отрисовка объектов меток
 
   window.pin = function (mapPings, adsCount) {
-
     var mapPinsElement = document.querySelector('.map__pins');
     var fragment = document.createDocumentFragment();
     var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');

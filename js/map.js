@@ -5,7 +5,7 @@
   window.inactiveState();
   // Обработчик Enter на активизацию
   window.onEnterClick = function (evt) {
-    if (evt.keyCode === 13) {
+    if (evt.key === 'Enter') {
       window.activeState();
     }
   };

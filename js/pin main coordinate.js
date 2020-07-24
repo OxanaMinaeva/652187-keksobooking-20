@@ -7,29 +7,29 @@
     var map = document.querySelector('.map');
     var mapOffsetLeft = map.offsetLeft;
 
-    var mapPinMainLeft = Number(mapPinMain.style.left.replace(/px/, ''));
-    var mapPinMainTop = Number(mapPinMain.style.top.replace(/px/, ''));
-    var mapPinMainWidth = Number(mapPinMain.clientWidth);
-    var mapPinMainHeight = Number(mapPinMain.clientHeight);
-    var mapPinMainHeightAfter = Number(getComputedStyle(mapPinMain, '::after').height.replace(/px/, ''));
+    var left = Number(mapPinMain.style.left.replace(/px/, ''));
+    var top = Number(mapPinMain.style.top.replace(/px/, ''));
+    var width = Number(mapPinMain.clientWidth);
+    var height = Number(mapPinMain.clientHeight);
+    var heightAfter = Number(getComputedStyle(mapPinMain, '::after').height.replace(/px/, ''));
 
-    var pinMainCoordinateCenterLeft = Math.round(mapOffsetLeft + mapPinMainLeft + mapPinMainWidth / 2);
-    var pinMainCoordinateCenterTop = Math.round(mapPinMainTop + (mapPinMainHeightAfter + mapPinMainHeight) / 2);
-    var pinMainCoordinateSpearheadTop = Math.round(mapPinMainTop + mapPinMainHeight + mapPinMainHeightAfter);
+    var centerLeft = Math.round(mapOffsetLeft + left + width / 2);
+    var centerTop = Math.round(top + (heightAfter + height) / 2);
+    var spearheadTop = Math.round(top + height + heightAfter);
 
-    var addressInactiveMap = (pinMainCoordinateCenterLeft + ', ' + pinMainCoordinateCenterTop);
-    var addressActiveMap = (pinMainCoordinateCenterLeft + ', ' + pinMainCoordinateSpearheadTop);
+    var addressInactiveMap = (centerLeft + ', ' + centerTop);
+    var addressActiveMap = (centerLeft + ', ' + spearheadTop);
 
     return {
-      pinMainCoordinateX: pinMainCoordinateCenterLeft,
-      pinMainCoordinateY: pinMainCoordinateSpearheadTop,
+      x: centerLeft,
+      y: spearheadTop,
       addressInactiveMap: addressInactiveMap,
       addressActiveMap: addressActiveMap,
-      mapPinMainHeight: mapPinMainHeight,
-      mapPinMainHeightAfter: mapPinMainHeightAfter,
-      mapPinMainWidth: mapPinMainWidth,
-      mapPinMainLeft: mapPinMainLeft,
-      mapPinMainTop: mapPinMainTop
+      height: height,
+      heightAfter: heightAfter,
+      width: width,
+      left: left,
+      top: top
 
     };
   };

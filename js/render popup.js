@@ -2,6 +2,16 @@
 
 (function () {
 
+  // тип жилья offer.type: Квартира для flat, Бунгало для bungalo, Дом для house, Дворец для palace.
+  var popupTypeMap = {
+    'flat': 'Квартира',
+    'bungalo': 'Бунгало',
+    'house': 'Дом',
+    'palace': 'Дворец'
+  };
+
+  var MIN_VALUE = 0;
+
   // Отрисовка удобств
   var getPopupFeature = function (mapCardPopup, card) {
     var popupAllFeatures = mapCardPopup.querySelectorAll('.popup__feature');
@@ -25,7 +35,6 @@
     popupPhotos.src = card.offer.photos[0];
 
     for (var k = 0; k < card.offer.photos.length - 1; k++) {
-      popupPhotos = mapCardPopup.querySelector('.popup__photo');
       var popupPhotoImg = popupPhotos.cloneNode(true);
       popupPhotos.src = card.offer.photos[k + 1];
       popupPhotos.before(popupPhotoImg);
@@ -33,14 +42,6 @@
   };
 
   window.renderPopup = function (card) {
-    // тип жилья offer.type: Квартира для flat, Бунгало для bungalo, Дом для house, Дворец для palace.
-    var popupTypeMap = {
-      'flat': 'Квартира',
-      'bungalo': 'Бунгало',
-      'house': 'Дом',
-      'palace': 'Дворец'
-    };
-
     var mapFiltersContainer = document.querySelector('.map__filters-container');
     var fragment = document.createDocumentFragment();
     var mapCardPopupTemplate = document.querySelector('#card').content.querySelector('.map__card');
@@ -70,7 +71,7 @@
     setCardBlock(popupTypeMap[card.offer.type], '.popup__type', '');
 
 
-    if (card.offer.rooms !== 0 && card.offer.guests !== 0) {
+    if (card.offer.rooms !== MIN_VALUE && card.offer.guests !== MIN_VALUE) {
       mapCardPopup.querySelector('.popup__text--capacity').textContent = card.offer.rooms + ' комнаты ' + card.offer.guests + ' гостей';
     } else {
       removeElem('.popup__text--capacity');
@@ -82,7 +83,7 @@
       removeElem('.popup__text--time');
     }
 
-    if (card.offer.features.length > 0) {
+    if (card.offer.features.length > MIN_VALUE) {
       getPopupFeature(mapCardPopup, card);
     } else {
       removeElem('.popup__features');
@@ -90,7 +91,7 @@
 
     setCardBlock(card.offer.description, '.popup__description', '');
 
-    if (card.offer.photos.length > 0) {
+    if (card.offer.photos.length > MIN_VALUE) {
       getPopupPhotos(mapCardPopup, card);
     } else {
       removeElem('.popup__photos');

@@ -33,18 +33,18 @@
         };
 
         var pinMainCoordinates = window.pinMainCoordinates();
-        if (pinMainCoordinates.pinMainCoordinateY < Coordinate.Y_MIN) {
-          mapPinMain.style.top = (Coordinate.Y_MIN - pinMainCoordinates.mapPinMainHeightAfter - pinMainCoordinates.mapPinMainHeight) + 'px';
-        } else if (pinMainCoordinates.pinMainCoordinateY > Coordinate.Y_MAX) {
-          mapPinMain.style.top = (Coordinate.Y_MAX - pinMainCoordinates.mapPinMainHeightAfter - pinMainCoordinates.mapPinMainHeight) + 'px';
+        if (pinMainCoordinates.y < Coordinate.Y_MIN) {
+          mapPinMain.style.top = (Coordinate.Y_MIN - pinMainCoordinates.heightAfter - pinMainCoordinates.height) + 'px';
+        } else if (pinMainCoordinates.y > Coordinate.Y_MAX) {
+          mapPinMain.style.top = (Coordinate.Y_MAX - pinMainCoordinates.heightAfter - pinMainCoordinates.height) + 'px';
         } else {
           mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
         }
 
         if (startCoords.x > mapOffsetWidth + mapOffsetLeft) {
-          mapPinMain.style.left = (mapOffsetWidth - pinMainCoordinates.mapPinMainWidth / 2) + 'px';
+          mapPinMain.style.left = (mapOffsetWidth - pinMainCoordinates.width / 2) + 'px';
         } else if (startCoords.x < mapOffsetLeft) {
-          mapPinMain.style.left = (-pinMainCoordinates.mapPinMainWidth / 2) + 'px';
+          mapPinMain.style.left = (-pinMainCoordinates.width / 2) + 'px';
         } else {
           mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
         }

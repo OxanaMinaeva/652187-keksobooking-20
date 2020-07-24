@@ -11,11 +11,9 @@
     var selectHousingRooms = document.querySelector('#housing-rooms');
     var selectHousingGuests = document.querySelector('#housing-guests');
     var mapFeatures = document.querySelector('.map__features');
-
+    var mapPins = document.querySelector('.map__pins');
 
     var updatePins = function () {
-      var mapPins = document.querySelector('.map__pins');
-
       while (mapPins.lastChild.type === 'button') {
         mapPins.lastChild.remove();
       }

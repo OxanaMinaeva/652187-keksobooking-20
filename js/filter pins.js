@@ -11,6 +11,9 @@
     var filterRooms = document.querySelector('#housing-rooms');
     var filterGuests = document.querySelector('#housing-guests');
 
+    var mapFeatures = document.querySelector('.map__features');
+    var inputsFeatures = mapFeatures.querySelectorAll('input[name=features]');
+
     var getRank = function (pin) {
       var rank = 0;
       if (pin.offer.type === filterType.value || filterType.value === 'any') {
@@ -44,11 +47,7 @@
       return rank;
     };
 
-
-    var mapFeatures = document.querySelector('.map__features');
-    var inputsFeatures = mapFeatures.querySelectorAll('input[name=features]');
     var checkedFeatures = [];
-
     inputsFeatures.forEach(function (inputFeature) {
       if (inputFeature.checked) {
         checkedFeatures.push(inputFeature.value);

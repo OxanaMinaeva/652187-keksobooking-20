@@ -3,8 +3,8 @@
 
   var mapPinMainCoordinates = window.pinMainCoordinates();
   window.mapPinMain = {
-    mapPinMainLeft: mapPinMainCoordinates.mapPinMainLeft,
-    mapPinMainTop: mapPinMainCoordinates.mapPinMainTop,
+    left: mapPinMainCoordinates.left,
+    top: mapPinMainCoordinates.top,
     addressInactiveMap: mapPinMainCoordinates.addressInactiveMap
   };
 

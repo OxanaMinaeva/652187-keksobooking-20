@@ -1,21 +1,13 @@
 'use strict';
 
 (function () {
+
   // Операции с формой
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var mapPinMain = document.querySelector('.map__pin--main');
   var adForm = document.querySelector('.ad-form');
 
-  // Установка адреса в зависимости от состояния
-  window.form = function (state) {
-    var addressInput = document.querySelector('.ad-form__element input[name=address]');
-    if (state === 'inactive') {
-      addressInput.value = window.pinMainCoordinates().addressInactiveMap;
-    } else {
-      addressInput.value = window.pinMainCoordinates().addressActiveMap;
-    }
-
-    return addressInput;
-  };
+  var addressInput = document.querySelector('.ad-form__element input[name=address]');
 
   var adFormSubmit = document.querySelector('.ad-form__submit');
   var adFormReset = document.querySelector('.ad-form__reset');
@@ -29,31 +21,77 @@
   var timeinSelect = document.querySelector('.ad-form__element select[name=timein]');
   var timeoutSelect = document.querySelector('.ad-form__element select[name=timeout]');
 
+  var avatarChooser = document.querySelector('.ad-form__field input[type=file]');
+  var avatarPreview = document.querySelector('.ad-form-header__preview img');
+
+  var fotoChooser = document.querySelector('.ad-form__upload input[type=file]');
+  var adFormFoto = document.querySelector('.ad-form__photo');
+
+  var mapFilters = document.querySelector('.map__filters');
+
+  var mapCardPopup = document.querySelector('.map__card.popup');
+
+  var elementNameMap = {
+    capacitySelect: 'capacity',
+    typeSelect: 'type',
+    timeinSelect: 'timein',
+    timeoutSelect: 'timeout'
+  };
+
+  // Установка адреса в зависимости от состояния
+  window.form = function (state) {
+    if (state === 'inactive') {
+      addressInput.value = window.pinMainCoordinates().addressInactiveMap;
+    } else {
+      addressInput.value = window.pinMainCoordinates().addressActiveMap;
+    }
+
+    return addressInput;
+  };
+
   mapPinMain.addEventListener('keydown', function (evt) {
     window.onEnterClick(evt);
   });
 
   capacitySelect.addEventListener('change', function () {
-    window.formValidation('capacity', roomsSelect, capacitySelect);
+    window.formValidation(elementNameMap.capacitySelect, roomsSelect, capacitySelect);
   });
   adFormSubmit.addEventListener('click', function () {
-    window.formValidation('capacity', roomsSelect, capacitySelect);
+    window.formValidation(elementNameMap.capacitySelect, roomsSelect, capacitySelect);
   });
 
   // Тип жилья и Цена
   typeSelect.addEventListener('change', function () {
-    window.formValidation('type', typeSelect, priceInput);
+    window.formValidation(elementNameMap.typeSelect, typeSelect, priceInput);
   });
   adFormSubmit.addEventListener('click', function () {
-    window.formValidation('type', typeSelect, priceInput);
+    window.formValidation(elementNameMap.typeSelect, typeSelect, priceInput);
   });
   // Время заезда и выезда
   timeinSelect.addEventListener('change', function () {
-    window.formValidation('timein', timeinSelect, timeoutSelect);
+    window.formValidation(elementNameMap.timeinSelect, timeinSelect, timeoutSelect);
   });
   timeoutSelect.addEventListener('change', function () {
-    window.formValidation('timeout', timeinSelect, timeoutSelect);
+    window.formValidation(elementNameMap.timeoutSelect, timeinSelect, timeoutSelect);
   });
+
+  // Аватар
+  avatarChooser.addEventListener('change', function () {
+    window.foto(avatarChooser, avatarPreview, FILE_TYPES);
+  });
+
+  // Фото жилья
+  fotoChooser.addEventListener('change', function () {
+    var imgFoto;
+    if (!adFormFoto.querySelector('img')) {
+      imgFoto = new Image(adFormFoto.clientWidth, adFormFoto.clientHeight);
+      adFormFoto.appendChild(imgFoto);
+    } else {
+      imgFoto = adFormFoto.querySelector('img');
+    }
+    window.foto(fotoChooser, imgFoto, FILE_TYPES);
+  });
+
 
   // Отправка формы
   adForm.addEventListener('submit', function (evt) {
@@ -67,17 +105,15 @@
   });
 
   var documentReset = function () {
-    var mapFilters = document.querySelector('.map__filters');
     mapFilters.reset();
     adForm.reset();
 
-    if (document.querySelector('.map__card.popup')) {
-      var mapCardPopup = document.querySelector('.map__card.popup');
+    if (mapCardPopup) {
       mapCardPopup.remove();
     }
 
-    mapPinMain.style.top = window.mapPinMain.mapPinMainTop + 'px';
-    mapPinMain.style.left = window.mapPinMain.mapPinMainLeft + 'px';
+    mapPinMain.style.top = window.mapPinMain.top + 'px';
+    mapPinMain.style.left = window.mapPinMain.left + 'px';
     window.inactiveState();
   };
 
