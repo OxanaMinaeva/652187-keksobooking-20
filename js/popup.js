@@ -21,8 +21,8 @@
     var openPopup = function (mapPin, card) {
       mapPin.addEventListener('click', function () {
         var mapCardPopup = window.renderPopup(card);
+        mapPin.classList.add('map__pin--active');
         var popupClose = mapCardPopup.querySelector('.popup__close');
-
         popupClose.addEventListener('click', onPopupCloseClick);
         document.addEventListener('keydown', onDocumentKeydown);
 
@@ -31,6 +31,10 @@
 
     var closePopup = function (mapCardPopup) {
       mapCardPopup.remove();
+      if (document.querySelector('.map__pin--active')) {
+        var mapPinActive = document.querySelector('.map__pin--active');
+        mapPinActive.classList.remove('map__pin--active');
+      }
       document.removeEventListener('keydown', onDocumentKeydown);
     };
 

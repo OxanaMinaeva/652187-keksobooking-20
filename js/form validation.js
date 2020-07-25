@@ -3,23 +3,23 @@
 (function () {
   window.formValidation = function (formElement, firstElement, secondElement) {
     var typePriceMap = {
-      'bungalo': '0',
-      'flat': '1000',
-      'house': '5000',
-      'palace': '10000'
+      bungalo: 0,
+      flat: 1000,
+      house: 5000,
+      palace: 10000
     };
 
     var elementNameMap = {
-      'capacity': 'capacity',
-      'type': 'type',
-      'timein': 'timein',
-      'timeout': 'timeout'
+      capacity: 'capacity',
+      type: 'type',
+      timein: 'timein',
+      timeout: 'timeout'
     };
 
     var MAX_ROOMS = '100';
     var MIN_CAPACITY = '0';
 
-    if (formElement === elementNameMap['capacity']) {
+    if (formElement === elementNameMap.capacity) {
       var roomsSelectValue = firstElement.value;
       var capacitySelectValue = secondElement.value;
 
@@ -33,20 +33,20 @@
       }
     }
 
-    if (formElement === elementNameMap['type']) {
+    if (formElement === elementNameMap.type) {
       var typeSelectValue = firstElement.value;
       var priceElementValue = secondElement.value;
-      if (priceElementValue < Number(typePriceMap[typeSelectValue])) {
+      if (priceElementValue < typePriceMap[typeSelectValue]) {
         secondElement.setCustomValidity('Минимальная цена за ночь должна быть не менее ' + typePriceMap[typeSelectValue] + '₽/ночь');
       } else {
         secondElement.setCustomValidity('');
       }
     }
 
-    if (formElement === elementNameMap['timein'] || formElement === elementNameMap['timeout']) {
+    if (formElement === elementNameMap.timein || formElement === elementNameMap.timeout) {
       var timeinSelectValue = firstElement.value;
       var timeoutSelectValue = secondElement.value;
-      if (formElement === elementNameMap['timein']) {
+      if (formElement === elementNameMap.timein) {
         secondElement.value = timeinSelectValue;
       } else {
         firstElement.value = timeoutSelectValue;

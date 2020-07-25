@@ -4,10 +4,10 @@
 
   // тип жилья offer.type: Квартира для flat, Бунгало для bungalo, Дом для house, Дворец для palace.
   var popupTypeMap = {
-    'flat': 'Квартира',
-    'bungalo': 'Бунгало',
-    'house': 'Дом',
-    'palace': 'Дворец'
+    flat: 'Квартира',
+    bungalo: 'Бунгало',
+    house: 'Дом',
+    palace: 'Дворец'
   };
 
   var MIN_VALUE = 0;
@@ -49,6 +49,11 @@
 
     if (mapCardPopup) {
       mapCardPopup.remove();
+    }
+
+    if (document.querySelector('.map__pin--active')) {
+      var mapPinActive = document.querySelector('.map__pin--active');
+      mapPinActive.classList.remove('map__pin--active');
     }
 
     mapCardPopup = mapCardPopupTemplate.cloneNode(true);
