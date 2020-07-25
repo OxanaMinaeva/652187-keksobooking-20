@@ -7,14 +7,14 @@
 
     var onPopupCloseClick = function (evt) {
       if (evt.type === 'click') {
-        closePopup(evt.target.parentElement);
+        window.closePopup(evt.target.parentElement);
       }
     };
 
     var onDocumentKeydown = function (evt) {
       if (evt.key === 'Escape') {
         var mapCardPopup = document.querySelector('.map__card.popup');
-        closePopup(mapCardPopup);
+        window.closePopup(mapCardPopup);
       }
     };
 
@@ -29,7 +29,7 @@
       });
     };
 
-    var closePopup = function (mapCardPopup) {
+    window.closePopup = function (mapCardPopup) {
       mapCardPopup.remove();
       if (document.querySelector('.map__pin--active')) {
         var mapPinActive = document.querySelector('.map__pin--active');

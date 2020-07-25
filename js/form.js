@@ -29,8 +29,6 @@
 
   var mapFilters = document.querySelector('.map__filters');
 
-  var mapCardPopup = document.querySelector('.map__card.popup');
-
   var elementNameMap = {
     capacitySelect: 'capacity',
     typeSelect: 'type',
@@ -107,10 +105,6 @@
   var documentReset = function () {
     mapFilters.reset();
     adForm.reset();
-
-    if (mapCardPopup) {
-      mapCardPopup.remove();
-    }
 
     mapPinMain.style.top = window.mapPinMain.top + 'px';
     mapPinMain.style.left = window.mapPinMain.left + 'px';
